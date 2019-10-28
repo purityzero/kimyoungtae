@@ -1,0 +1,64 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
+package com.nrtsc.casinogames;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.widget.Toast;
+import com.nrtsc.casinogames.wxapi.WXEntryActivity;
+import com.tencent.mm.opensdk.modelmsg.SendAuth.Req;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.unity3d.player.UnityPlayer;
+import com.unity3d.player.UnityPlayerActivity;
+
+public class MainActivity extends UnityPlayerActivity {
+    public static String UserInfo;
+    public static Context context;
+
+    public MainActivity() {
+    }
+
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+    }
+
+    protected void onCreate(Bundle savedInstanceState) {
+        context = this.getApplicationContext();
+        super.onCreate(savedInstanceState);
+    }
+
+    public static void getUserInfoValue() {
+        UnityPlayer.UnitySendMessage("SocialLogInManger", "GetUserInfo", UserInfo);
+    }
+
+    public static void ShowToastMSG() {
+        Toast.makeText(context, WXEntryActivity.class.getName(), 1).show();
+    }
+
+    public static void InitLoginInfo() {
+        WXEntryActivity.openID = "";
+        WXEntryActivity.acc_Tocken = "";
+    }
+
+    public static void LogIn() {
+        IWXAPI api = WXAPIFactory.createWXAPI(context, "AppRegisterID", false);
+        Req req = new Req();
+        api.registerApp("AppRegisterID");
+        req.scope = "snsapi_userinfo,snsapi_friend,snsapi_message,snsapi_contact";
+        req.state = "none";
+        if (api.isWXAppInstalled()) {
+            api.sendReq(req);
+        } else {
+            Toast.makeText(context, "Please install the WeChat application.", 1).show();
+            UnityPlayer.UnitySendMessage("SocialLogInManger", "WechatLink", "Call");
+        }
+
+    }
+
+    public static void LogOut() {
+    }
+}

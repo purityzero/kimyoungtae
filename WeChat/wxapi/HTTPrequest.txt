@@ -1,0 +1,49 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
+package com.nrtsc.casinogames.wxapi;
+
+import java.io.InputStreamReader;
+import java.net.URL;
+import javax.net.ssl.HttpsURLConnection;
+
+public class WXEntryActivity$HTTPrequest extends Thread {
+    public WXEntryActivity$HTTPrequest(WXEntryActivity this$0) {
+        this.this$0 = this$0;
+    }
+
+    public void run() {
+        WXEntryActivity.access$002(this.this$0, WXEntryActivity.Url);
+        String a_t_r = "";
+
+        try {
+            URL url = new URL(WXEntryActivity.access$000(this.this$0));
+            HttpsURLConnection httpURLConnection = (HttpsURLConnection)url.openConnection();
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.setDoInput(true);
+            httpURLConnection.setConnectTimeout(10000);
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.connect();
+            InputStreamReader bis = new InputStreamReader(httpURLConnection.getInputStream(), "utf-8");
+
+            int c;
+            for(boolean var5 = false; (c = bis.read()) != -1; a_t_r = a_t_r + (char)c) {
+                ;
+            }
+
+            WXEntryActivity.access$102(a_t_r);
+            if (WXEntryActivity.openID != null && WXEntryActivity.openID != "") {
+                WXEntryActivity.access$200(this.this$0);
+            } else {
+                this.this$0.UserInfoReq();
+            }
+        } catch (Exception var6) {
+            System.out.println(WXEntryActivity.access$000(this.this$0) + "Connect Fail");
+            var6.printStackTrace();
+            a_t_r = "http error";
+        }
+
+    }
+}

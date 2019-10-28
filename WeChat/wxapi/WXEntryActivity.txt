@@ -1,0 +1,142 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
+package com.nrtsc.casinogames.wxapi;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.Toast;
+import com.nrtsc.casinogames.MainActivity;
+import com.tencent.mm.opensdk.modelbase.BaseReq;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelmsg.SendAuth.Resp;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import java.io.InputStreamReader;
+import java.net.URL;
+import javax.net.ssl.HttpsURLConnection;
+
+public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
+    private final String APP_ID = "APP_ID";
+    private final String APP_SECRET = "APP_SECRET";
+    private static String tocken;
+    private IWXAPI api;
+    private String code = "";
+    public static String openID = "";
+    public static String acc_Tocken = "";
+    private String urlGet;
+    private WXEntryActivity.HTTPrequest ConnectUserInfoPrequest;
+    public static String Url;
+
+    public WXEntryActivity() {
+    }
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.api = WXAPIFactory.createWXAPI(this, "wxca84d85ad29c3b44", false);
+        this.api.handleIntent(this.getIntent(), this);
+        this.finish();
+    }
+
+    private static String OpenID(String[] data) {
+        String cutString = "\",\"scope";
+        int cutNum = data[3].lastIndexOf(cutString);
+        data[3] = data[3].substring(0, cutNum);
+        return data[3];
+    }
+
+    private static String ACC_TOCKEN(String[] data) {
+        String cutString = "\",\"expires_in\":7200,\"refresh_token";
+        int cutNum = data[1].lastIndexOf(cutString);
+        data[1] = data[1].substring(0, cutNum);
+        return data[1];
+    }
+
+    public void onReq(BaseReq req) {
+    }
+
+    public void onResp(BaseResp resp) {
+        switch(resp.errCode) {
+        case -4:
+            Toast.makeText(this, "User denied the request", 1).show();
+        case -3:
+        case -1:
+        default:
+            break;
+        case -2:
+            Toast.makeText(this, "User canceled the request", 1).show();
+            break;
+        case 0:
+            try {
+                Resp sendResp = (Resp)resp;
+                this.GetResponseInfo(sendResp);
+                Url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxca84d85ad29c3b44&secret=831b22bc2114db29e66dc3ea1525172c&code=" + this.code + "&grant_type=authorization_code";
+                this.ConnectUserInfoPrequest = new WXEntryActivity.HTTPrequest();
+                this.ConnectUserInfoPrequest.start();
+                Toast.makeText(this, "User request success", 1).show();
+            } catch (Exception var3) {
+                Toast.makeText(this, "Exception while parsing token", 1).show();
+            }
+        }
+
+    }
+
+    private void GetResponseInfo(Resp resp) {
+        this.code = resp.code;
+    }
+
+    public void UserInfoReq() {
+        String[] tokenSpilt = tocken.split("\":\"");
+        openID = OpenID(tokenSpilt);
+        acc_Tocken = ACC_TOCKEN(tokenSpilt);
+        Url = "https://api.weixin.qq.com/sns/userinfo?access_token=" + acc_Tocken + "&openid=" + openID;
+        WXEntryActivity.HTTPrequest GetUserInfoRequest = new WXEntryActivity.HTTPrequest();
+        GetUserInfoRequest.start();
+    }
+
+    private void UserInfoResp() {
+        MainActivity.UserInfo = tocken;
+        MainActivity.getUserInfoValue();
+    }
+
+    public class HTTPrequest extends Thread {
+        public HTTPrequest() {
+        }
+
+        public void run() {
+            WXEntryActivity.this.urlGet = WXEntryActivity.Url;
+            String a_t_r = "";
+
+            try {
+                URL url = new URL(WXEntryActivity.this.urlGet);
+                HttpsURLConnection httpURLConnection = (HttpsURLConnection)url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.setConnectTimeout(10000);
+                httpURLConnection.setRequestMethod("GET");
+                httpURLConnection.connect();
+                InputStreamReader bis = new InputStreamReader(httpURLConnection.getInputStream(), "utf-8");
+
+                int c;
+                for(boolean var5 = false; (c = bis.read()) != -1; a_t_r = a_t_r + (char)c) {
+                    ;
+                }
+
+                WXEntryActivity.tocken = a_t_r;
+                if (WXEntryActivity.openID != null && WXEntryActivity.openID != "") {
+                    WXEntryActivity.this.UserInfoResp();
+                } else {
+                    WXEntryActivity.this.UserInfoReq();
+                }
+            } catch (Exception var6) {
+                System.out.println(WXEntryActivity.this.urlGet + "Connect Fail");
+                var6.printStackTrace();
+                a_t_r = "http error";
+            }
+
+        }
+    }
+}
