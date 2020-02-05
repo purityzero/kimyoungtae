@@ -19,24 +19,12 @@ public class InspectionSystem : PasstiveSingleton<InspectionSystem>
 
     public MatchObejct FindMatchObject(Vector2 pos)
     {
-        bool isFind = false;
-        MatchObejct matchObejct;
-
         for (int i = 0; i < MatchLines.Count; i++)
         {
-            for (int j = 0; j < MatchLines[i].MatchObejctList.Count; j++)
+            if (MatchLines[i].ExistMatchObject(pos))
             {
-                if (MatchLines[i].MatchObejctList[j].Position == pos)
-                {
-                    matchObejct = MatchLines[i].MatchObejctList[j];
-                    isFind = true;
-                    return matchObejct;
-                }
-            }
-            if (isFind == true)
-            {
-                Debug.LogError("해당 위치에 MatchObject 정보가 없습니다.");
-                return null;
+                CollisonObject = MatchLines[i].FindMatchObject(pos);
+                return CollisonObject;
             }
         }
 
@@ -54,6 +42,9 @@ public class InspectionSystem : PasstiveSingleton<InspectionSystem>
             if (DragMatchObject.IsDrag == false)
             {
                 MoveSystem.instance.ReturnMatchObject(DragMatchObject, DragMatchObject.Position);
+                MoveSystem.instance.ReturnMatchObject(CollisonObject, CollisonObject.Position);
+                DragMatchObject = null;
+                CollisonObject = null;
             }
         }
     }

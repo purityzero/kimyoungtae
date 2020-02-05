@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+
+// Todo
+// 1. MoveSystem에서 움직임 뺄 것
+// 2. MatchManagement 클래스에서 움직임을 뺄 것인지, InspetionSystem에서 움직임을 뺄 것인지 고민
+// 3. MatchObejct를 세분화 해서 더욱 다양한 MatchObject를 만들 것을 추후 고민
+// 4. 기본 Pos, ObjectName(ID->int), Sprite는 뺄 것.
 [RequireComponent(typeof(BoxCollider2D))]
 [System.Serializable]
 public class MatchObejct : MonoBehaviour
@@ -82,7 +88,6 @@ public class MatchObejct : MonoBehaviour
             }
         }
 
-        // 이동하는 곳에 있는 물체도 움직여준다. Match에서 말고 MoveSystem에서 해서 교차 검증 하자.
         var collisionMatchObject = InspectionSystem.instance.FindMatchObject(collisionPos);
         MoveSystem.instance.CollisionMove(collisionMatchObject, Position);
         StartCoroutine(coWaitDragEnd());

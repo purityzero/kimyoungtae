@@ -69,8 +69,8 @@
     <Compile Include="Assets\OtherAsset\DoTween\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\OtherAsset\DoTween\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Scripts\InGame.cs" />
-    <Compile Include="Assets\Scripts\InspectionSystem\Inspection.cs" />
     <Compile Include="Assets\Scripts\InspectionSystem\InspectionSystem.cs" />
+    <Compile Include="Assets\Scripts\InspectionSystem\MatchCheck.cs" />
     <Compile Include="Assets\Scripts\Match\MatchLine.cs" />
     <Compile Include="Assets\Scripts\Match\MatchObejct.cs" />
     <Compile Include="Assets\Scripts\Match\MatchObjectManagement.cs" />
@@ -79,16 +79,16 @@
     <Compile Include="Assets\Scripts\Util\PasstiveSingleton.cs" />
     <None Include="Assets\OtherAsset\DoTween\Demigiant\DOTween\readme.txt" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>C:/Users/Kim/Desktop/3MatchGame/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>C:/GitHubGB/3MatchGame/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/Kim/Desktop/3MatchGame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/GitHubGB/3MatchGame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/Kim/Desktop/3MatchGame/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/GitHubGB/3MatchGame/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/Kim/Desktop/3MatchGame/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/GitHubGB/3MatchGame/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -289,7 +289,7 @@
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>C:/Users/Kim/Desktop/3MatchGame/Assets/OtherAsset/DoTween/Demigiant/DOTween/DOTween.dll</HintPath>
+      <HintPath>C:/GitHubGB/3MatchGame/Assets/OtherAsset/DoTween/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>C:/Users/Kim/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>

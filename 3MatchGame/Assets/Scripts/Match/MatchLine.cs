@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MatchLine : PasstiveSingleton<MatchLine> {
+public class MatchLine : MonoBehaviour {
     public List<MatchObejct> MatchObejctList;
     public int MatchObjectCount;
     public int MatchLineNumber;
@@ -24,6 +24,16 @@ public class MatchLine : PasstiveSingleton<MatchLine> {
             MatchObejctList.Add(createObject);
         }
         
+    }
+
+    public bool ExistMatchObject(Vector2 matchObjPos)
+    {
+        return MatchObejctList.Exists(x => x.Position == matchObjPos);
+    }
+
+    public MatchObejct FindMatchObject(Vector2 matchObjPos)
+    {
+        return MatchObejctList.Find(x => x.Position == matchObjPos);
     }
 
     private void Update()
