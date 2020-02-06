@@ -9,42 +9,35 @@ public class InspectionSystem : PasstiveSingleton<InspectionSystem>
     public MatchObejct DragMatchObject;
     public MatchObejct CollisonObject;
 
-    public Vector2 CollisionVector;
+    public Vector2 CollisionVector; // 애를 어찌 받아 오지?
 
     private void Start()
     {
         MatchLines = FindObjectsOfType<MatchLine>().ToList();
         DragMatchObject = null;
+        StartCoroutine(coInspectionUpdate());
     }
 
-    public MatchObejct FindMatchObject(Vector2 pos)
+    private IEnumerator coInspectionUpdate()
     {
-        for (int i = 0; i < MatchLines.Count; i++)
+        while (true)
         {
-            if (MatchLines[i].ExistMatchObject(pos))
+            yield return null; 
+            if (DragMatchObject != null)
             {
-                CollisonObject = MatchLines[i].FindMatchObject(pos);
-                return CollisonObject;
-            }
-        }
+                CollisonObject = MatchObjectManagement.instance.FindMatchObject(CollisionVector);
+                yield return StartCoroutine(MoveSystem.instance.CollisionMove(CollisonObject, DragMatchObject.Position));
+                yield return new WaitUntil(() => DragMatchObject.IsDrag == false);
+                // 맞았을때 로직
 
-        Debug.LogError("그 위치로는 이동 할 수 없습니다.");
-        return null;
-    }
-
-    private void Update()
-    {
-        if (DragMatchObject != null)
-        {
-            // 맞았을때 로직
-
-            // 틀렸을때 로직
-            if (DragMatchObject.IsDrag == false)
-            {
-                MoveSystem.instance.ReturnMatchObject(DragMatchObject, DragMatchObject.Position);
-                MoveSystem.instance.ReturnMatchObject(CollisonObject, CollisonObject.Position);
-                DragMatchObject = null;
-                CollisonObject = null;
+                // 틀렸을때 로직
+                if (DragMatchObject != null && CollisonObject != null)
+                {
+                    MoveSystem.instance.ReturnMatchObject(DragMatchObject, DragMatchObject.Position);
+                    MoveSystem.instance.ReturnMatchObject(CollisonObject, CollisonObject.Position);
+                    DragMatchObject = null;
+                    CollisonObject = null;
+                }
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,12 +27,13 @@ public class MatchLine : MonoBehaviour {
         
     }
 
-    public bool ExistMatchObject(Vector2 matchObjPos)
+
+    internal bool ExistMatchObject(Vector2 matchObjPos)
     {
         return MatchObejctList.Exists(x => x.Position == matchObjPos);
     }
 
-    public MatchObejct FindMatchObject(Vector2 matchObjPos)
+    internal MatchObejct FindMatchObject(Vector2 matchObjPos)
     {
         return MatchObejctList.Find(x => x.Position == matchObjPos);
     }

@@ -12,8 +12,22 @@ public class MoveSystem : PasstiveSingleton<MoveSystem> {
         obj.gameObject.transform.DOMove(movePos, 0.5f);
     }
 
-    public void CollisionMove(MatchObejct obj, Vector2 movePos)
+    public IEnumerator CollisionMove(MatchObejct obj, Vector2 movePos)
     {
-        obj.gameObject.transform.DOMove(movePos, 0.5f);
+        bool isComplete = false;
+        Debug.Log("움직이자 부딫친 오브젝트야 " + obj + "이동위치" + movePos);
+        obj.gameObject.transform.DOMove(movePos, 0.5f).OnComplete(() => {
+            isComplete = true;
+        });
+        yield return new WaitUntil(() => isComplete);
+    }
+
+    public IEnumerator coTweenMove(MatchObejct obj, Vector2 movePos)
+    {
+        bool isComplete = false;
+        obj.gameObject.transform.DOMove(movePos, 0.5f).OnComplete(() => {
+             isComplete = true;
+        });
+        yield return new WaitUntil(() => isComplete);
     }
 }

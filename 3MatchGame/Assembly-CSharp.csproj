@@ -70,7 +70,7 @@
     <Compile Include="Assets\OtherAsset\DoTween\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Scripts\InGame.cs" />
     <Compile Include="Assets\Scripts\InspectionSystem\InspectionSystem.cs" />
-    <Compile Include="Assets\Scripts\InspectionSystem\MatchCheck.cs" />
+    <Compile Include="Assets\Scripts\Match\MatchCheckSystem.cs" />
     <Compile Include="Assets\Scripts\Match\MatchLine.cs" />
     <Compile Include="Assets\Scripts\Match\MatchObejct.cs" />
     <Compile Include="Assets\Scripts\Match\MatchObjectManagement.cs" />
