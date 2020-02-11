@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class InspectionSystem : PasstiveSingleton<InspectionSystem>
+public class InspectionSystem : MonoBehaviour
 {
     public List<MatchLine> MatchLines;
-    public MatchObejct DragMatchObject;
-    public MatchObejct CollisonObject;
+    public static MatchObejct DragMatchObject;
+    public static MatchObejct CollisionObject;
 
-    public Vector2 CollisionVector; // 애를 어찌 받아 오지?
+    public static Vector2 CollisionVector; // 애를 어찌 받아 오지?
 
     private void Start()
     {
@@ -25,18 +25,20 @@ public class InspectionSystem : PasstiveSingleton<InspectionSystem>
             yield return null; 
             if (DragMatchObject != null)
             {
-                CollisonObject = MatchObjectManagement.instance.FindMatchObject(CollisionVector);
-                yield return StartCoroutine(MoveSystem.instance.CollisionMove(CollisonObject, DragMatchObject.Position));
+                CollisionObject = MatchObjectManagement.instance.FindMatchObject(CollisionVector);
+                yield return StartCoroutine(MoveSystem.CollisionMove(CollisionObject, DragMatchObject.Position));
                 yield return new WaitUntil(() => DragMatchObject.IsDrag == false);
-                // 맞았을때 로직
+                //// 맞았을때 로직
+                //var tt = MatchCheckSystem.MatchCheck();
+                //Debug.Log(tt.Count);
 
-                // 틀렸을때 로직
-                if (DragMatchObject != null && CollisonObject != null)
+                //틀렸을때 로직
+                if (DragMatchObject != null && CollisionObject != null)
                 {
-                    MoveSystem.instance.ReturnMatchObject(DragMatchObject, DragMatchObject.Position);
-                    MoveSystem.instance.ReturnMatchObject(CollisonObject, CollisonObject.Position);
+                    MoveSystem.ReturnMatchObject(DragMatchObject, DragMatchObject.Position);
+                    MoveSystem.ReturnMatchObject(CollisionObject, CollisionObject.Position);
                     DragMatchObject = null;
-                    CollisonObject = null;
+                    CollisionObject = null;
                 }
             }
         }

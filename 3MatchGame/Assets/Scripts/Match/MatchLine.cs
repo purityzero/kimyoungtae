@@ -42,7 +42,7 @@ public class MatchLine : MonoBehaviour {
     {
         if (MatchObejctList.Find(x => x.IsDrag == true))
         {
-            InspectionSystem.instance.DragMatchObject = MatchObejctList.Find(x => x.IsDrag == true);
+            InspectionSystem.DragMatchObject = MatchObejctList.Find(x => x.IsDrag == true);
         }
     }
 }

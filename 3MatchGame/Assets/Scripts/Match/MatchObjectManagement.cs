@@ -10,7 +10,7 @@ public class MatchObjectManagement : PasstiveSingleton<MatchObjectManagement> {
 
     public void Start()
     {
-        MatchLineList = FindObjectsOfType<MatchLine>().ToList();
+        MatchLineList = FindObjectsOfType<MatchLine>().OrderBy(x => x.MatchLineNumber).ToList();
     }
 
     public MatchObejct FindMatchObject(Vector2 pos)
@@ -25,5 +25,18 @@ public class MatchObjectManagement : PasstiveSingleton<MatchObjectManagement> {
         }
         Debug.LogError("오브젝트를 찾지 못하였습니다.");
         return null;
+    }
+
+    public bool ExistMatchObject(Vector2 pos)
+    {
+        for (int i = 0; i < MatchLineList.Count; i++)
+        {
+            if (MatchLineList[i].ExistMatchObject(pos))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

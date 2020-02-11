@@ -47,58 +47,44 @@ public class MatchObejct : MonoBehaviour
 
         var absX = Mathf.Abs(StartTouchPoint.x) + Mathf.Abs(EndTouchPoint.x);
         var absY = Mathf.Abs(StartTouchPoint.y) + Mathf.Abs(EndTouchPoint.y);
-
         Vector2 collisionPos = Vector2.zero;
-
         if (iscomparerX == true && iscomparerY == true) {
             if (absX > absY) {
-                collisionPos = new Vector2(transform.position.x + 0.5f, transform.position.y);
-                InspectionSystem.instance.CollisionVector = collisionPos;
-                StartCoroutine(coMove(this, collisionPos));
+                StartCoroutine(coMove(this, (collisionPos = new Vector2(transform.position.x + 0.5f, transform.position.y))));
             } else {
-                collisionPos = new Vector2(transform.position.x, transform.position.y + 0.5f);
-                StartCoroutine(coMove(this, collisionPos));
+                StartCoroutine(coMove(this, (collisionPos = new Vector2(transform.position.x, transform.position.y+ 0.5f))));
             }
         }
         else if (iscomparerY == false && iscomparerX == false) {
             if (absX > absY) {
-                collisionPos = new Vector2(transform.position.x - 0.5f, transform.position.y);
-                InspectionSystem.instance.CollisionVector = collisionPos;
-                StartCoroutine(coMove(this, collisionPos));
+                StartCoroutine(coMove(this, (collisionPos = new Vector2(transform.position.x -0.5f, transform.position.y))));
             } else {
-                collisionPos = new Vector2(transform.position.x, transform.position.y - 0.5f);
-                InspectionSystem.instance.CollisionVector = collisionPos;
-                StartCoroutine(coMove(this, collisionPos));
+                StartCoroutine(coMove(this, (collisionPos = new Vector2(transform.position.x, transform.position.y - 0.5f))));
             }
         }
         else if (iscomparerX == true && iscomparerY == false) {
             if (absX > absY) {
-                collisionPos = new Vector2(transform.position.x + 0.5f, transform.position.y);
-                InspectionSystem.instance.CollisionVector = new Vector2(Position.x + 0.5f, Position.y);
-                StartCoroutine(coMove(this, collisionPos));
+                StartCoroutine(coMove(this, (collisionPos = new Vector2(transform.position.x + 0.5f, transform.position.y))));
             } else {
-                collisionPos = new Vector2(transform.position.x, transform.position.y - 0.5f);
-                InspectionSystem.instance.CollisionVector = new Vector2(Position.x, Position.y - 0.5f);
-                StartCoroutine(coMove(this, collisionPos));
+                StartCoroutine(coMove(this, (collisionPos = new Vector2(transform.position.x, transform.position.y - 0.5f))));
             }
         } else
         {
             if (absX > absY) {
-                collisionPos = new Vector2(transform.position.x - 0.5f, transform.position.y);
-                InspectionSystem.instance.CollisionVector = new Vector2(Position.x - 0.5f, Position.y);
-                StartCoroutine(coMove(this, collisionPos));
+                StartCoroutine(coMove(this, (collisionPos = new Vector2(transform.position.x - 0.5f, transform.position.y))));
             }
             else {
-                collisionPos = new Vector2(transform.position.x, transform.position.y + 0.5f);
-                InspectionSystem.instance.CollisionVector = new Vector2(Position.x, Position.y + 0.5f);
-                StartCoroutine(coMove(this, collisionPos));
+                StartCoroutine(coMove(this, (collisionPos = new Vector2(transform.position.x, transform.position.y + 0.5f))));
             }
         }
+        InspectionSystem.CollisionVector = collisionPos;
     }
+
 
     private IEnumerator coMove(MatchObejct obj, Vector2 pos)
     {
-        yield return StartCoroutine(MoveSystem.instance.coTweenMove(obj, pos));
+        if (MatchObjectManagement.instance.ExistMatchObject(pos))
+        yield return StartCoroutine(MoveSystem.coTweenMove(obj, pos));
         IsDrag = false;
     }
 }
