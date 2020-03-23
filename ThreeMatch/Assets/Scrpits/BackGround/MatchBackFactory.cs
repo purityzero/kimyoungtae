@@ -19,5 +19,7 @@ public class MatchBackFactory : MonoBehaviour
             factoryObject.transform.position = new Vector2(FirstVector.x + (i * Interval.x), FirstVector.y + (i * Interval.y));
             FactoryList.Add(factoryObject);
         }
+
+        FactoryList.ForEach(x => x.FactorySetting());
     }
 }

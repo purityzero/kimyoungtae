@@ -26,4 +26,6 @@ public class Factory : MonoBehaviour
             block.transform.position = blockBackObject.transform.position;
         }
     }
+
+    
 }
