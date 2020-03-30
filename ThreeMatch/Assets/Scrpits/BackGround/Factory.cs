@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Factory : MonoBehaviour
 {
-    private GameObject ObjectBack => GameManager.instance.BlockBackObject;
+    private ObjectBack ObjectBack => GameManager.instance.BlockBackObject;
     private int BlockCnt => GameManager.instance.BlockHeight;
     public float firstY;
-    public List<GameObject> BlockBackList { get; private set; }
+    public List<ObjectBack> BlockBackList { get; private set; } = new List<ObjectBack>();
+    public List<MatchBlock> MatchBLockList { get; private set; } = new List<MatchBlock>();
 
     private void Awake()
     {
@@ -16,7 +17,6 @@ public class Factory : MonoBehaviour
 
     public void FactorySetting()
     {
-        BlockBackList = new List<GameObject>();
         for (int i = 0; i < BlockCnt; i++)
         {
             var blockBackObject = Instantiate(ObjectBack, this.transform);
@@ -24,7 +24,23 @@ public class Factory : MonoBehaviour
             var block = Instantiate(GameManager.instance.MatchBlockList.RandomChoose());
             block.transform.parent = blockBackObject.transform;
             block.transform.position = blockBackObject.transform.position;
+            MatchBLockList.Add(block);
         }
+    }
+
+    public void MatchBLockRemove(MatchBlock matchBLock)
+    {
+        MatchBLockList.Remove(matchBLock);
+    }
+
+    public void MatchBLockAdd(MatchBlock matchBLock)
+    {
+        MatchBLockList.Add(matchBLock);
+    }
+
+    public MatchBlock FindMatchBlock(int idx)
+    {
+        return MatchBLockList[idx];
     }
 
     

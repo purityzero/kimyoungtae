@@ -22,4 +22,20 @@ public class MatchBackFactory : MonoBehaviour
 
         FactoryList.ForEach(x => x.FactorySetting());
     }
+
+    public MatchBlock GetMatchBlock(int x, int y)
+    {
+        if (x > GameManager.instance.FactoryCnt || y > GameManager.instance.BlockHeight || x < 0 || y < 0 ) return null;
+        else return FactoryList[x].FindMatchBlock(y);
+    }
+
+    public Factory FindFactory(int idx)
+    {
+        return FactoryList[idx];
+    }
+
+    public Factory FindFactory(float vectorX)
+    {
+        return FindFactory((int)vectorX);
+    }
 }

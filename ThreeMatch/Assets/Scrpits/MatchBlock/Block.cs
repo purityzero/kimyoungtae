@@ -16,7 +16,6 @@ public class Block : MonoBehaviour
     public Vector2 EndPos;
 
     public blockType BlockType;
-    public ThreeMatchDefine.movePos MovePos;
 
     protected virtual void Start()
     {
@@ -26,7 +25,6 @@ public class Block : MonoBehaviour
         }
         StartPos = transform.parent.transform.localPosition;
 
-        MovePos = ThreeMatchDefine.movePos.None;
         if (ID % 1000 != 0)
         {
             BlockType = blockType.Event;
@@ -37,17 +35,11 @@ public class Block : MonoBehaviour
         }
     }
 
-    protected virtual void Move(ThreeMatchDefine.movePos MoveDir) { }
-
-
-    private void OnMouseUp()
+    public void BlockSetAgain()
     {
-        // 이거 바뀌어서..ㅎㅎㅎ..ㅎ.ㅎ.ㅎ.ㅎ.ㅎ 안씁니다.
-        EndPos = (transform.position - Camera.main.ScreenPointToRay(Input.mousePosition).origin);
-        // 나중에 Round 말고 0.# 으로 바꿔보는건? Boxing 이루어지는건 좀..
-        EndPos = new Vector2((float)Math.Round(EndPos.x, 1), (float)Math.Round(EndPos.y, 1));
-        if (BlockType == blockType.Common) {
-        }
+        StartPos = transform.parent.transform.localPosition;
     }
+
+    public virtual void Move(ThreeMatchDefine.movePos MoveDir) { }
 
 }

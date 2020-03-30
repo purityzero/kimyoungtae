@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scrpits\BackGround\Factory.cs" />
     <Compile Include="Assets\Scrpits\BackGround\MatchBackFactory.cs" />
     <Compile Include="Assets\Scrpits\BackGround\ObjectBack.cs" />
+    <Compile Include="Assets\Scrpits\BlockMoveSystem.cs" />
     <Compile Include="Assets\Scrpits\GameManager.cs" />
     <Compile Include="Assets\Scrpits\MatchBlock\Block.cs" />
     <Compile Include="Assets\Scrpits\MatchBlock\MatchBlock.cs" />
